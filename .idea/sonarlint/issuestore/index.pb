@@ -106,3 +106,7 @@ w
 G.idea/sonarlint/issuestore/f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e,5\2\52114fdaa426e9b83a3c5df4e11c4f0ebbcd814b
 w
 G.idea/sonarlint/issuestore/d/b/dbcff70658daf80b53ce624f6adcaa529df5ed8d,5\9\597ee72a8e9f089a0f26608d0d77229bc4510a37
+j
+:app/src/main/java/com/curiousapps/keepnote/MainFragment.kt,1\9\19be65465a46f1a5ddabe817604943b7b1296490
+k
+;app/src/main/java/com/curiousapps/keepnote/MainViewModel.kt,a\5\a5ed94ff30b8ff69236046618481ca734cc06dbc
