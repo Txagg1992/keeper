@@ -110,3 +110,9 @@ j
 :app/src/main/java/com/curiousapps/keepnote/MainFragment.kt,1\9\19be65465a46f1a5ddabe817604943b7b1296490
 k
 ;app/src/main/java/com/curiousapps/keepnote/MainViewModel.kt,a\5\a5ed94ff30b8ff69236046618481ca734cc06dbc
+m
+=app/src/main/java/com/curiousapps/keepnote/data/NoteEntity.kt,b\d\bd92f2659f352b8daea33f11096e76501713e265
+g
+7app/src/main/java/com/curiousapps/keepnote/Constants.kt,4\9\49943bf9e742d9941032f9ea0d8e1415125d4fd5
+u
+Eapp/src/main/java/com/curiousapps/keepnote/data/SampleDataProvider.kt,3\1\316452629cdf4784f28a5aadab959d4911145cdc
