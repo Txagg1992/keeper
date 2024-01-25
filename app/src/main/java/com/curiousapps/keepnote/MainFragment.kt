@@ -8,11 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.curiousapps.keepnote.databinding.FragmentMainBinding
 
-class MainFragment : Fragment() {
+class MainFragment :
+    Fragment(),
+    NotesListAdapter.ListItemListener{
 
     private lateinit var viewModel: MainViewModel
     private lateinit var binding: FragmentMainBinding
@@ -34,7 +37,7 @@ class MainFragment : Fragment() {
 
         viewModel.notesList.observe(viewLifecycleOwner, Observer{
             Log.e("VM note Log", it.toString())
-            adapter = NotesListAdapter(it)
+            adapter = NotesListAdapter(it, this@MainFragment)
             binding.recyclerView.adapter = adapter
             binding.recyclerView.layoutManager = LinearLayoutManager(activity)
 
@@ -42,6 +45,13 @@ class MainFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    override fun onItemClick(noteId: Int) {
+        Log.e("mainFrag", "onItemClick: received noteId $noteId")
+
+        val action = MainFragmentDirections.actionEditorFragment(noteId)
+        findNavController().navigate(action)
     }
 
 }

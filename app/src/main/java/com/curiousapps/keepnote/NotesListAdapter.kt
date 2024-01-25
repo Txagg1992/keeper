@@ -1,5 +1,6 @@
 package com.curiousapps.keepnote
 
+import android.view.InputQueue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,8 @@ import com.curiousapps.keepnote.data.NoteEntity
 import com.curiousapps.keepnote.databinding.ListItemBinding
 
 class NotesListAdapter(
-    private val notesList: List<NoteEntity>):
+    private val notesList: List<NoteEntity>,
+    private val listener: ListItemListener):
     RecyclerView.Adapter<NotesListAdapter.ViewHolder>()
  {
      inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -29,8 +31,15 @@ class NotesListAdapter(
          val note = notesList[position]
          with(holder.binding){
              noteTextView.text = note.text
+             root.setOnClickListener{
+                 listener.onItemClick(noteId = note.id)
+             }
          }
      }
 
      override fun getItemCount() = notesList.size
+
+     interface ListItemListener{
+         fun onItemClick(noteId: Int)
+     }
  }
