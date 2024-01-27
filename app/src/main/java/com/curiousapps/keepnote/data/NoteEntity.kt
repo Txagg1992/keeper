@@ -1,9 +1,13 @@
 package com.curiousapps.keepnote.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.curiousapps.keepnote.NEW_NOTE_ID
 import java.util.Date
 
+@Entity(tableName = "notesTable")
 data class NoteEntity(
+    @PrimaryKey(autoGenerate = true)
     var id: Int,
     var date: Date,
     var text: String

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Keeper</string>
     <string name="enter_note">Enter Note</string>
+    <string name="add_sample_data">Add Sample Data</string>
 </resources>

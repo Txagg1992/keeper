@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +32,8 @@ class MainFragment :
 
         (activity as AppCompatActivity)
             .supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        setHasOptionsMenu(true)
+
         binding =FragmentMainBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
@@ -39,7 +44,7 @@ class MainFragment :
             )
         }
 
-        viewModel.notesList.observe(viewLifecycleOwner, Observer{
+        viewModel.notesList?.observe(viewLifecycleOwner, Observer{
             Log.e("VM note Log", it.toString())
             adapter = NotesListAdapter(it, this@MainFragment)
             binding.recyclerView.adapter = adapter
@@ -49,6 +54,25 @@ class MainFragment :
         })
 
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.action_sample_data -> addSampleData()
+            else -> super.onOptionsItemSelected(item)
+        }
+
+
+    }
+
+    private fun addSampleData(): Boolean {
+        viewModel.addSampleData()
+        return true
     }
 
     override fun onItemClick(noteId: Int) {
