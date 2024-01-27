@@ -13,6 +13,8 @@ class NotesListAdapter(
     private val listener: ListItemListener):
     RecyclerView.Adapter<NotesListAdapter.ViewHolder>()
  {
+
+     val selectedNotes = arrayListOf<NoteEntity>()
      inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
          val binding = ListItemBinding.bind(itemView)
@@ -34,6 +36,23 @@ class NotesListAdapter(
              root.setOnClickListener{
                  listener.onItemClick(noteId = note.id)
              }
+             noteFab.setOnClickListener {
+                 if (selectedNotes.contains(note)){
+                     selectedNotes.remove(note)
+                     noteFab.setImageResource(R.drawable.ic_notes)
+                 }else{
+                     selectedNotes.add(note)
+                     noteFab.setImageResource(R.drawable.ic_check)
+                 }
+                 listener.onItemSelectionChange()
+             }
+             noteFab.setImageResource(
+                 if (selectedNotes.contains(note)){
+                     R.drawable.ic_check
+                 }else{
+                     R.drawable.ic_notes
+                 }
+             )
          }
      }
 
@@ -41,5 +60,6 @@ class NotesListAdapter(
 
      interface ListItemListener{
          fun onItemClick(noteId: Int)
+         fun onItemSelectionChange()
      }
  }

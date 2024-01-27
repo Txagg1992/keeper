@@ -2,8 +2,6 @@ package com.curiousapps.keepnote
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.curiousapps.keepnote.data.AppDatabase
 import com.curiousapps.keepnote.data.NoteEntity
@@ -23,6 +21,21 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             withContext(Dispatchers.IO){
                 val sampleNotes = SampleDataProvider.getNotes()
                 database?.noteDao()?.insertAll(sampleNotes)
+            }
+        }
+    }
+
+    fun deleteNotes(selectedNotes: List<NoteEntity>) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                database?.noteDao()?.deleteNotes(selectedNotes)
+            }
+        }
+    }
+    fun deleteAllNotes() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                database?.noteDao()?.deleteAllNotes()
             }
         }
     }

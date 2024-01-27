@@ -9,7 +9,7 @@
     android:background="@drawable/item_background">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/note_fab"
         android:layout_width="72dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -28,7 +28,7 @@
         android:maxLines="2"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/floatingActionButton"
+        app:layout_constraintStart_toEndOf="@+id/note_fab"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="myText" />
 </androidx.constraintlayout.widget.ConstraintLayout>
