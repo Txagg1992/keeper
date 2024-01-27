@@ -1,11 +1,9 @@
 package com.curiousapps.keepnote
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -13,9 +11,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.curiousapps.keepnote.databinding.FragmentMainBinding
 
@@ -41,9 +40,6 @@ class MainFragment :
 
         with(binding.recyclerView){
             setHasFixedSize(true)
-            val divider = DividerItemDecoration(
-                context, LinearLayoutManager(context).orientation
-            )
         }
 
         viewModel.notesList?.observe(viewLifecycleOwner, Observer{
@@ -54,6 +50,10 @@ class MainFragment :
 
 
         })
+
+        binding.addNoteFab.setOnClickListener {
+            onEditNote(NEW_NOTE_ID)
+        }
 
         return binding.root
     }
@@ -103,7 +103,7 @@ class MainFragment :
         return true
     }
 
-    override fun onItemClick(noteId: Int) {
+    override fun onEditNote(noteId: Int) {
         Log.e("mainFrag", "onItemClick: received noteId $noteId")
 
         val action = MainFragmentDirections.actionEditorFragment(noteId)

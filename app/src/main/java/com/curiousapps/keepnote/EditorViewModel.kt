@@ -3,7 +3,6 @@ package com.curiousapps.keepnote
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.curiousapps.keepnote.data.AppDatabase
 import com.curiousapps.keepnote.data.NoteEntity
@@ -14,7 +13,7 @@ import kotlinx.coroutines.withContext
 class EditorViewModel(app: Application) : AndroidViewModel(app) {
 
     private val dataBase = AppDatabase.getInstance(app)
-    val currentNote = MutableLiveData<NoteEntity>()
+    val currentNote = MutableLiveData<NoteEntity?>()
 
     fun getNoteById(noteId: Int){
         viewModelScope.launch {

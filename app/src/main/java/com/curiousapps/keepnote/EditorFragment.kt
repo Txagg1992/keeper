@@ -1,9 +1,7 @@
 package com.curiousapps.keepnote
 
 import android.app.Activity
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -11,11 +9,12 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.curiousapps.keepnote.databinding.FragmentEditorBinding
-import com.curiousapps.keepnote.databinding.FragmentMainBinding
 
 class EditorFragment : Fragment() {
 
@@ -36,6 +35,13 @@ class EditorFragment : Fragment() {
         }
         setHasOptionsMenu(true)
 
+        requireActivity().title =
+            if (args.noteId == NEW_NOTE_ID) {
+                "New Note"
+            }else{
+                "Edit Note"
+            }
+
         viewModel = ViewModelProvider(this)[EditorViewModel::class.java]
 
         binding = FragmentEditorBinding.inflate(inflater, container, false)
@@ -43,15 +49,15 @@ class EditorFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
-            object : OnBackPressedCallback(true){
+            object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     saveAndReturn()
                 }
             }
         )
-        viewModel.currentNote.observe(viewLifecycleOwner, Observer{
+        viewModel.currentNote.observe(viewLifecycleOwner, Observer {
             binding.editor.setText(
-                it.text
+                it?.text
             )
         })
         viewModel.getNoteById(args.noteId)

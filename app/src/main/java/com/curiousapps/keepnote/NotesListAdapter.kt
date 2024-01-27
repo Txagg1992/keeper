@@ -1,6 +1,5 @@
 package com.curiousapps.keepnote
 
-import android.view.InputQueue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +33,7 @@ class NotesListAdapter(
          with(holder.binding){
              noteTextView.text = note.text
              root.setOnClickListener{
-                 listener.onItemClick(noteId = note.id)
+                 listener.onEditNote(noteId = note.id)
              }
              noteFab.setOnClickListener {
                  if (selectedNotes.contains(note)){
@@ -59,7 +58,7 @@ class NotesListAdapter(
      override fun getItemCount() = notesList.size
 
      interface ListItemListener{
-         fun onItemClick(noteId: Int)
+         fun onEditNote(noteId: Int)
          fun onItemSelectionChange()
      }
  }
