@@ -1,5 +1,6 @@
 package com.curiousapps.keepnote
 
+import android.app.Activity
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.curiousapps.keepnote.databinding.FragmentEditorBinding
@@ -33,8 +36,10 @@ class EditorFragment : Fragment() {
         }
         setHasOptionsMenu(true)
 
+        viewModel = ViewModelProvider(this)[EditorViewModel::class.java]
+
         binding = FragmentEditorBinding.inflate(inflater, container, false)
-        binding.editor.setText("You selected note number ${args.noteId}")
+        binding.editor.setText("")
 
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
@@ -44,13 +49,14 @@ class EditorFragment : Fragment() {
                 }
             }
         )
+        viewModel.currentNote.observe(viewLifecycleOwner, Observer{
+            binding.editor.setText(
+                it.text
+            )
+        })
+        viewModel.getNoteById(args.noteId)
+
         return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(EditorViewModel::class.java)
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -61,6 +67,14 @@ class EditorFragment : Fragment() {
     }
 
     private fun saveAndReturn(): Boolean {
+
+        val imm = requireActivity()
+            .getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
+
+        viewModel.currentNote.value?.text = binding.editor.text.toString()
+        viewModel.updateNote()
+
         findNavController().navigateUp()
         return true
     }
