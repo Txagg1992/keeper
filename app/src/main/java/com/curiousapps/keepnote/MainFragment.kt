@@ -55,6 +55,8 @@ class MainFragment :
             onEditNote(NEW_NOTE_ID)
         }
 
+        requireActivity().title = getString(R.string.app_name)
+
         return binding.root
     }
 
