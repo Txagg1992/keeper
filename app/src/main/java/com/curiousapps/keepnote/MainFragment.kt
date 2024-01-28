@@ -16,7 +16,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.curiousapps.keepnote.data.NoteEntity
 import com.curiousapps.keepnote.databinding.FragmentMainBinding
+import java.util.ArrayList
 
 class MainFragment :
     Fragment(),
@@ -48,7 +50,9 @@ class MainFragment :
             binding.recyclerView.adapter = adapter
             binding.recyclerView.layoutManager = LinearLayoutManager(activity)
 
-
+            val selectedNotes =
+                savedInstanceState?.getParcelableArrayList<NoteEntity>(SELECTED_NOTES_KEY)
+            adapter.selectedNotes.addAll(selectedNotes ?: emptyList())
         })
 
         binding.addNoteFab.setOnClickListener {
@@ -114,6 +118,14 @@ class MainFragment :
 
     override fun onItemSelectionChange() {
         requireActivity().invalidateOptionsMenu()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (this::adapter.isInitialized){
+        outState.putParcelableArrayList(SELECTED_NOTES_KEY,
+            adapter.selectedNotes)
+        }
+        super.onSaveInstanceState(outState)
     }
 
 }
